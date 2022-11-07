@@ -11,9 +11,9 @@ async function main() {
     },
   });
 
-  const pool = await prisma.pool.create({
+  const poll = await prisma.poll.create({
     data: {
-      title: 'My first pool',
+      title: 'My first poll',
       code: 'ABC123',
       ownerId: user.id,
       participants: {
@@ -34,25 +34,27 @@ async function main() {
 
   await prisma.game.create({
     data: {
-      date: '2022-11-02T22:26:50.931Z',
+      date: '2022-11-03T12:00:00.201Z',
       firstTeamCountryCode: 'BR',
       secondTeamCountryCode: 'AR',
+
       guesses: {
         create: {
-          firstTeamPoints: 1,
-          secondTeamPoints: 2,
+          firstTeamPoints: 2,
+          secondTeamPoints: 1,
+
           participant: {
             connect: {
-              userId_poolId: {
+              userId_pollId: {
                 userId: user.id,
-                poolId: pool.id,
-              },
+                pollId: poll.id,
+              }
             }
           }
-        },
-      },
+        }
+      }
     },
-  });
+  })
 }
 
 main();
